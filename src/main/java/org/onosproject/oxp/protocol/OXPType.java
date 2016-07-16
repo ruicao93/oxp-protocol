@@ -1,0 +1,27 @@
+
+package org.onosproject.oxp.protocol;
+
+/**
+ * Created by cr on 16-4-6.
+ * OXP type enum
+ */
+public enum OXPType {
+    OXPT_HELLO,
+    OXPT_ERROR,
+    OXPT_ECHO_REQUEST,
+    OXPT_ECHO_REPLY,
+    OXPT_EXPERIMENTER,
+    OXPT_FEATURES_REQUEST,
+    OXPT_REATURES_REPLY,
+    OXPT_GET_CONFIG_REQUEST,
+    OXPT_GET_CONFIG_REPLY,
+    OXPT_SET_CONFIG,
+    OXPT_TOPO_REQUEST,
+    OXPT_TOPO_REPLY,
+    OXPT_HOST_REQUEST,
+    OXPT_HOST_REPLY,
+    OXPT_HOST_UPDATE,
+    OXPT_VPORT_STATUS,
+    OXPT_SBP,
+    OXPT_VENDER;
+}
