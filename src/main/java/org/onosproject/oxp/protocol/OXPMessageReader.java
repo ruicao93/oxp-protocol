@@ -7,5 +7,5 @@ import org.onosproject.oxp.exceptions.OXPParseError;
  * Created by cr on 16-4-7.
  */
 public interface OXPMessageReader<T> {
-    T readFrom(ChannelBuffer channelBuffer) throws OXPParseError;
+    T readFrom(ChannelBuffer bb) throws OXPParseError;
 }

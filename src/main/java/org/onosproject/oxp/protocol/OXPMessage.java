@@ -12,7 +12,7 @@ public interface OXPMessage extends OXPObject {
     OXPType getType();
     long getXid();
 
-    void writeTo(ChannelBuffer channelBuffer);
+    void writeTo(ChannelBuffer bb);
 
     Builder createBuilder();
     public interface Builder {

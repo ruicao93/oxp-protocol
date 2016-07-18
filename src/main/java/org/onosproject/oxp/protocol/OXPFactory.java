@@ -1,6 +1,8 @@
 package org.onosproject.oxp.protocol;
 
 
+import org.onosproject.oxp.protocol.errormsg.OXPErrorMsgs;
+
 import java.util.List;
 
 /**
@@ -8,9 +10,13 @@ import java.util.List;
  */
 public interface OXPFactory extends XidGenerator {
 
+    //Subfactories
+    OXPErrorMsgs errorMsgs();
 
     OXPHello.Builder buildHello();
     OXPHello hello(List<OXPHelloElem> elements);
+    OXPEchoRequest.Builder buildEchoRequest();
+    OXPEchoReply.Builder buildEchoReply();
 
     OXPMessageReader<OXPMessage> getReader();
     OXPVersion getVersion();

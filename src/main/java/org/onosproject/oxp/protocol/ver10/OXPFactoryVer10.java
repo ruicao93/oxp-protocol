@@ -1,13 +1,16 @@
 package org.onosproject.oxp.protocol.ver10;
 
+import org.onosproject.oxp.protocol.OXPEchoReply;
+import org.onosproject.oxp.protocol.OXPEchoRequest;
 import org.onosproject.oxp.protocol.OXPFactory;
 import org.onosproject.oxp.protocol.OXPHello;
-import org.onosproject.oxp.protocol.OXPHelloElem;
-import org.onosproject.oxp.protocol.OXPMessage;
 import org.onosproject.oxp.protocol.OXPMessageReader;
 import org.onosproject.oxp.protocol.OXPVersion;
 import org.onosproject.oxp.protocol.XidGenerator;
 import org.onosproject.oxp.protocol.XidGenerators;
+import org.onosproject.oxp.protocol.errormsg.OXPErrorMsgs;
+import org.onosproject.oxp.protocol.OXPHelloElem;
+import org.onosproject.oxp.protocol.OXPMessage;
 
 import java.util.List;
 
@@ -21,6 +24,11 @@ public class OXPFactoryVer10 implements OXPFactory {
     private final XidGenerator xidGenerator = XidGenerators.global();
 
     @Override
+    public OXPErrorMsgs errorMsgs() {
+        return OXPErrorMsgsVer10.INSTANCE;
+    }
+
+    @Override
     public OXPHello.Builder buildHello() {
         return new OXPHelloVer10.Builder().setXid(nextXid());
     }
@@ -30,6 +38,16 @@ public class OXPFactoryVer10 implements OXPFactory {
         return new OXPHelloVer10(
                 nextXid()
         );
+    }
+
+    @Override
+    public OXPEchoRequest.Builder buildEchoRequest() {
+        return new OXPEchoRequestVer10.Builder().setXid(nextXid());
+    }
+
+    @Override
+    public OXPEchoReply.Builder buildEchoReply() {
+        return new OXPEchoReplyVer10.Builder().setXid(nextXid());
     }
 
     @Override

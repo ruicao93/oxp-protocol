@@ -34,8 +34,17 @@ public final class OXPMessageVer10 {
             bb.readerIndex(start);
             switch (type) {
                 case (byte) 0x0:
-                    // discriminator value OFType.HELLO=0 for class OFHelloVer10
+                    // discriminator value OXPType=0 for class OXPHelloVer10
                     return OXPHelloVer10.READER.readFrom(bb);
+                case (byte) 0x1:
+                    // discriminator value OXPType=1 for class OXPErrorVer10
+                    return OXPErrorMsgVer10.READER.readFrom(bb);
+                case (byte) 0x2:
+                    // discriminator value OXPType=2 for class OXPEchoRequestVer10
+                    return OXPEchoRequestVer10.READER.readFrom(bb);
+                case (byte) 0x3:
+                    // discriminator value OXPType=3 for class OXPEchoRequestVer10
+                    return OXPEchoReplyVer10.READER.readFrom(bb);
                 default:
                     throw new OXPParseError("Unknown value for discriminator type of class OXPMessageVer10: " + type);
             }
