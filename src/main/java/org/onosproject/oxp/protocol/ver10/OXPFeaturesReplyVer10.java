@@ -176,7 +176,7 @@ public class OXPFeaturesReplyVer10 implements OXPFeaturesReply {
         @Override
         public OXPFeaturesReply build() {
             long xid = this.xidSet ? this.xid : DEFAULT_XID;
-            DomainId domainId = this.domainIdSet? this.domainId: DomainId.None;
+            DomainId domainId = this.domainIdSet? this.domainId: DEFAULT_DOMAIN_ID;
             if (domainId == null)
                 throw new NullPointerException("Property domainId must not be null");
             if (this.sbpType == null)
@@ -283,9 +283,15 @@ public class OXPFeaturesReplyVer10 implements OXPFeaturesReply {
                 return false;
         } else if (!domainId.equals(other.domainId))
             return false;
-        if (sbpType != other.sbpType)
+        if (sbpType == null) {
+            if (other.sbpType != null)
+                return false;
+        } else if (!sbpType.equals(other.sbpType))
             return false;
-        if (sbpVersion != other.sbpVersion)
+        if (sbpVersion == null) {
+            if (other.sbpVersion != null)
+                return false;
+        } else if (!sbpVersion.equals(other.sbpVersion))
             return false;
         if (capabilities == null) {
             if (other.capabilities != null)
