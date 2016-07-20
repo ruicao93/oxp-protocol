@@ -46,7 +46,7 @@ public class OXPEchoReplyVer10 implements OXPEchoReply {
 
     @Override
     public OXPType getType() {
-        return OXPType.OXPT_ECHO_REQUEST;
+        return OXPType.OXPT_ECHO_REPLY;
     }
 
     @Override
@@ -139,7 +139,7 @@ public class OXPEchoReplyVer10 implements OXPEchoReply {
 
         @Override
         public OXPType getType() {
-            return OXPType.OXPT_ECHO_REQUEST;
+            return OXPType.OXPT_ECHO_REPLY;
         }
 
         @Override

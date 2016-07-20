@@ -2,6 +2,7 @@ package org.onosproject.oxp.protocol.ver10;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.onosproject.oxp.exceptions.OXPParseError;
+import org.onosproject.oxp.protocol.OXPFeaturesRequest;
 import org.onosproject.oxp.protocol.OXPMessage;
 import org.onosproject.oxp.protocol.OXPMessageReader;
 
@@ -43,8 +44,17 @@ public final class OXPMessageVer10 {
                     // discriminator value OXPType=2 for class OXPEchoRequestVer10
                     return OXPEchoRequestVer10.READER.readFrom(bb);
                 case (byte) 0x3:
-                    // discriminator value OXPType=3 for class OXPEchoRequestVer10
+                    // discriminator value OXPType=3 for class OXPEchoReplyVer10
                     return OXPEchoReplyVer10.READER.readFrom(bb);
+                case (byte) 0x4:
+                    // discriminator value OXPType=4 for class OXPFeaturesRequestVer10
+                    throw new OXPParseError("Unknown value for discriminator type of class OXPMessageVer10: " + type);
+                case (byte) 0x5:
+                    // discriminator value OXPType=4 for class OXPFeaturesRequestVer10
+                    return OXPFeaturesRequestVer10.READER.readFrom(bb);
+                case (byte) 0x6:
+                    // discriminator value OXPType=4 for class OXPFeaturesReplyVer10
+                    return OXPFeaturesReplyVer10.READER.readFrom(bb);
                 default:
                     throw new OXPParseError("Unknown value for discriminator type of class OXPMessageVer10: " + type);
             }

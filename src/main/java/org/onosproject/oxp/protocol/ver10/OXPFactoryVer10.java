@@ -3,6 +3,8 @@ package org.onosproject.oxp.protocol.ver10;
 import org.onosproject.oxp.protocol.OXPEchoReply;
 import org.onosproject.oxp.protocol.OXPEchoRequest;
 import org.onosproject.oxp.protocol.OXPFactory;
+import org.onosproject.oxp.protocol.OXPFeaturesReply;
+import org.onosproject.oxp.protocol.OXPFeaturesRequest;
 import org.onosproject.oxp.protocol.OXPHello;
 import org.onosproject.oxp.protocol.OXPMessageReader;
 import org.onosproject.oxp.protocol.OXPVersion;
@@ -48,6 +50,16 @@ public class OXPFactoryVer10 implements OXPFactory {
     @Override
     public OXPEchoReply.Builder buildEchoReply() {
         return new OXPEchoReplyVer10.Builder().setXid(nextXid());
+    }
+
+    @Override
+    public OXPFeaturesRequest.Builder buildFeaturesRequst() {
+        return new OXPFeaturesRequestVer10.Builder().setXid(nextXid());
+    }
+
+    @Override
+    public OXPFeaturesReply.Builder buildFeaturesReply() {
+        return new OXPFeaturesReplyVer10.Builder().setXid(nextXid());
     }
 
     @Override

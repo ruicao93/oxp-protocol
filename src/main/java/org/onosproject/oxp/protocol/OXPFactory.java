@@ -17,6 +17,8 @@ public interface OXPFactory extends XidGenerator {
     OXPHello hello(List<OXPHelloElem> elements);
     OXPEchoRequest.Builder buildEchoRequest();
     OXPEchoReply.Builder buildEchoReply();
+    OXPFeaturesRequest.Builder buildFeaturesRequst();
+    OXPFeaturesReply.Builder buildFeaturesReply();
 
     OXPMessageReader<OXPMessage> getReader();
     OXPVersion getVersion();

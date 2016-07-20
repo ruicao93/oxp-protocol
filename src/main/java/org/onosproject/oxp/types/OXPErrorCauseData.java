@@ -1,7 +1,13 @@
 package org.onosproject.oxp.types;
 
+import com.google.common.base.Optional;
 import com.google.common.hash.PrimitiveSink;
 import org.jboss.netty.buffer.ChannelBuffer;
+import org.jboss.netty.buffer.ChannelBuffers;
+import org.onosproject.oxp.exceptions.OXPParseError;
+import org.onosproject.oxp.protocol.OXPFactories;
+import org.onosproject.oxp.protocol.OXPFactory;
+import org.onosproject.oxp.protocol.OXPMessage;
 import org.onosproject.oxp.protocol.OXPVersion;
 import org.onosproject.oxp.protocol.Writeable;
 import org.onosproject.oxp.util.ChannelUtils;
@@ -24,6 +30,24 @@ public class OXPErrorCauseData implements Writeable, PrimitiveSinkable{
     private OXPErrorCauseData(byte[] data, OXPVersion version) {
         this.data = data;
         this.version = version;
+    }
+
+    public byte[] getData() {
+        return Arrays.copyOf(data, data.length);
+    }
+
+    public Optional<OXPMessage> getParsedMessage() {
+        OXPFactory factory = OXPFactories.getFactory(version);
+        try {
+            OXPMessage msg = factory.getReader().readFrom(ChannelBuffers.wrappedBuffer(data));
+            if(msg != null)
+                return Optional.of(msg);
+            else
+                return Optional.absent();
+        } catch (OXPParseError e) {
+            logger.debug("Error parsing error cause data as OXPMessage: {}", e.getMessage(), e);
+            return Optional.absent();
+        }
     }
 
     public static OXPErrorCauseData of(byte[] data, OXPVersion version) {
