@@ -19,6 +19,9 @@ public interface OXPFactory extends XidGenerator {
     OXPEchoReply.Builder buildEchoReply();
     OXPFeaturesRequest.Builder buildFeaturesRequst();
     OXPFeaturesReply.Builder buildFeaturesReply();
+    OXPGetConfigRequest.Builder buildGetConfigRequest();
+    OXPGetConfigReply.Builder buildGetConfigReply();
+    OXPSetConfig.Builder buildSetConfig();
 
     OXPMessageReader<OXPMessage> getReader();
     OXPVersion getVersion();

@@ -50,11 +50,20 @@ public final class OXPMessageVer10 {
                     // discriminator value OXPType=4 for class OXPFeaturesRequestVer10
                     throw new OXPParseError("Unknown value for discriminator type of class OXPMessageVer10: " + type);
                 case (byte) 0x5:
-                    // discriminator value OXPType=4 for class OXPFeaturesRequestVer10
+                    // discriminator value OXPType=5 for class OXPFeaturesRequestVer10
                     return OXPFeaturesRequestVer10.READER.readFrom(bb);
                 case (byte) 0x6:
-                    // discriminator value OXPType=4 for class OXPFeaturesReplyVer10
+                    // discriminator value OXPType=6 for class OXPFeaturesReplyVer10
                     return OXPFeaturesReplyVer10.READER.readFrom(bb);
+                case (byte) 0x7:
+                    // discriminator value OXPType=7 for class OXPGetConfigRequestVer10
+                    return OXPGetConfigRequestVer10.READER.readFrom(bb);
+                case (byte) 0x8:
+                    // discriminator value OXPType=8 for class OXPGetConfigReplyVer10
+                    return OXPGetConfigReplyVer10.READER.readFrom(bb);
+                case (byte) 0x9:
+                    // discriminator value OXPType=9 for class OXPSetConfigVer10
+                    return OXPSetConfigVer10.READER.readFrom(bb);
                 default:
                     throw new OXPParseError("Unknown value for discriminator type of class OXPMessageVer10: " + type);
             }
