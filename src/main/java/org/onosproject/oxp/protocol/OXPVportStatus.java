@@ -1,29 +1,29 @@
 package org.onosproject.oxp.protocol;
 
 import org.jboss.netty.buffer.ChannelBuffer;
-import org.onosproject.oxp.types.OXPInternalLink;
-
-import java.util.List;
 
 /**
- * Created by cr on 16-7-21.
+ * Created by cr on 16-7-22.
  */
-public interface OXPTopologyReply extends OXPObject, OXPMessage {
+public interface OXPVportStatus extends OXPObject, OXPMessage {
     OXPVersion getVersion();
     OXPType getType();
     long getXid();
-    List<OXPInternalLink> getInternalLinks();
+    OXPVportReason getReason();
+    OXPVportDesc getVportDesc();
 
     void writeTo(ChannelBuffer bb);
 
     Builder createBuilder();
     public interface Builder extends OXPMessage.Builder {
-        OXPTopologyReply build();
+        OXPVportStatus build();
         OXPVersion getVersion();
         OXPType getType();
         long getXid();
         Builder setXid(long xid);
-        List<OXPInternalLink> getInternalLink();
-        Builder setInternalLink(List<OXPInternalLink> list);
+        OXPVportReason getReason();
+        Builder setReason(OXPVportReason reason);
+        OXPVportDesc getVportDesc();
+        Builder setVportDesc(OXPVportDesc vportDesc);
     }
 }

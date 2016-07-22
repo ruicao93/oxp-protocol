@@ -11,13 +11,13 @@ public class OXPVport implements OXPValueType<OXPVport> {
 
     static final short LENGTH = 2;
 
-    private static final short OXPP_MAX_SHORT = (short) 0xff00;
-    private static final short OXPP_IN_PORT_SHORT = (short) 0xfff8;
-    private static final short OXPP_FLOOD_SHORT = (short) 0xfffb;
-    private static final short OXPP_ALL_SHORT = (short) 0xfffc;
-    private static final short OXPP_CONTROLLER_SHORT = (short) 0xfffd;
-    private static final short OXPP_LOCAL_SHORT = (short) 0xfffe;
-    private static final short OXPP_NONE_SHORT = (short) 0xffff;
+    private static final short OXPP_MAX_SHORT = (short) 0xf00;
+    private static final short OXPP_IN_PORT_SHORT = (short) 0xff8;
+    private static final short OXPP_FLOOD_SHORT = (short) 0xffb;
+    private static final short OXPP_ALL_SHORT = (short) 0xffc;
+    private static final short OXPP_CONTROLLER_SHORT = (short) 0xffd;
+    private static final short OXPP_LOCAL_SHORT = (short) 0xffe;
+    private static final short OXPP_NONE_SHORT = (short) 0xfff;
 
     private final short portNumber;
 
@@ -104,5 +104,15 @@ public class OXPVport implements OXPValueType<OXPVport> {
         public String toString() {
             return name;
         }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof OXPVport))
+            return false;
+        OXPVport other = (OXPVport) obj;
+        if (this.portNumber != other.portNumber)
+            return false;
+        return true;
     }
 }

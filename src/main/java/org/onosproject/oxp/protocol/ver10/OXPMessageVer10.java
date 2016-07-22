@@ -3,6 +3,7 @@ package org.onosproject.oxp.protocol.ver10;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.onosproject.oxp.exceptions.OXPParseError;
 import org.onosproject.oxp.protocol.OXPFeaturesRequest;
+import org.onosproject.oxp.protocol.OXPHostRequest;
 import org.onosproject.oxp.protocol.OXPMessage;
 import org.onosproject.oxp.protocol.OXPMessageReader;
 
@@ -64,6 +65,24 @@ public final class OXPMessageVer10 {
                 case (byte) 0x9:
                     // discriminator value OXPType=9 for class OXPSetConfigVer10
                     return OXPSetConfigVer10.READER.readFrom(bb);
+                case (byte) 0xa:
+                    // discriminator value OXPType=10 for class OXPTopologyRequestVer10
+                    return OXPTopologyRequestVer10.READER.readFrom(bb);
+                case (byte) 0xb:
+                    // discriminator value OXPType=11 for class OXPSetConfigVer10
+                    return OXPTopologyReplyVer10.READER.readFrom(bb);
+                case (byte) 0xc:
+                    // discriminator value OXPType=12 for class OXPHostRequestVer10
+                    return OXPHostRequestVer10.READER.readFrom(bb);
+                case (byte) 0xd:
+                    // discriminator value OXPType=13 for class OXPHostReplyVer10
+                    return OXPHostReplyVer10.READER.readFrom(bb);
+                case (byte) 0xe:
+                    // discriminator value OXPType=14 for class OXPHostUpdateVer10
+                    return OXPHostUpdateVer10.READER.readFrom(bb);
+                case (byte) 0xf:
+                    // discriminator value OXPType=15 for class OXPVportStatusVer10
+                    return OXPVportStatusVer10.READER.readFrom(bb);
                 default:
                     throw new OXPParseError("Unknown value for discriminator type of class OXPMessageVer10: " + type);
             }

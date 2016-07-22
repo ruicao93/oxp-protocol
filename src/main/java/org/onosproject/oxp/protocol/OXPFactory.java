@@ -22,6 +22,13 @@ public interface OXPFactory extends XidGenerator {
     OXPGetConfigRequest.Builder buildGetConfigRequest();
     OXPGetConfigReply.Builder buildGetConfigReply();
     OXPSetConfig.Builder buildSetConfig();
+    OXPTopologyRequest.Builder buildTopologyRequest();
+    OXPTopologyReply.Builder buildTopologyReply();
+    OXPHostRequest.Builder buildHostRequest();
+    OXPHostReply.Builder buildHostReply();
+    OXPHostUpdate.Builder buildHostUpdate();
+    OXPVportStatus.Builder buildVportStatus();
+
 
     OXPMessageReader<OXPMessage> getReader();
     OXPVersion getVersion();

@@ -3,12 +3,12 @@ package org.onosproject.oxp.protocol.ver10;
 import com.google.common.hash.PrimitiveSink;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.onosproject.oxp.exceptions.OXPParseError;
+import org.onosproject.oxp.protocol.OXPHostReply;
 import org.onosproject.oxp.protocol.OXPMessageReader;
 import org.onosproject.oxp.protocol.OXPMessageWriter;
-import org.onosproject.oxp.protocol.OXPTopologyReply;
 import org.onosproject.oxp.protocol.OXPType;
 import org.onosproject.oxp.protocol.OXPVersion;
-import org.onosproject.oxp.types.OXPInternalLink;
+import org.onosproject.oxp.types.OXPHost;
 import org.onosproject.oxp.util.ChannelUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,21 +16,21 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 /**
- * Created by cr on 16-7-21.
+ * Created by cr on 16-7-22.
  */
-public class OXPTopologyReplyVer10 implements OXPTopologyReply {
-    public static final Logger logger = LoggerFactory.getLogger(OXPTopologyReplyVer10.class);
+public class OXPHostReplyVer10 implements OXPHostReply {
+    public static final Logger logger = LoggerFactory.getLogger(OXPHostReplyVer10.class);
 
     private static final int HEAD_LENGTH = 8;
 
     private final long xid;
-    private final List<OXPInternalLink> internalLinks;
+    private final List<OXPHost> hosts;
 
-    OXPTopologyReplyVer10(long xid, List<OXPInternalLink> internalLinks) {
-        if (internalLinks == null)
-            throw new NullPointerException("OXPTopologyReplyVer10: property internalLinks cannot be null");
+    OXPHostReplyVer10(long xid, List<OXPHost> hosts) {
+        if (hosts == null)
+            throw new NullPointerException("OXPHostReplyVer10: property hosts cannot be null");
         this.xid = xid;
-        this.internalLinks = internalLinks;
+        this.hosts = hosts;
     }
 
     @Override
@@ -40,7 +40,7 @@ public class OXPTopologyReplyVer10 implements OXPTopologyReply {
 
     @Override
     public OXPType getType() {
-        return OXPType.OXPT_TOPO_REPLY;
+        return OXPType.OXPT_HOST_REPLY;
     }
 
     @Override
@@ -48,14 +48,16 @@ public class OXPTopologyReplyVer10 implements OXPTopologyReply {
         return xid;
     }
 
-    public List<OXPInternalLink> getInternalLinks() {
-        return internalLinks;
+    @Override
+    public List<OXPHost> getHosts() {
+        return hosts;
     }
 
+
     static final Reader READER = new Reader();
-    static class Reader implements OXPMessageReader<OXPTopologyReply> {
+    static class Reader implements OXPMessageReader<OXPHostReply> {
         @Override
-        public OXPTopologyReply readFrom(ChannelBuffer bb) throws OXPParseError {
+        public OXPHostReply readFrom(ChannelBuffer bb) throws OXPParseError {
             int startIndex = bb.readerIndex();
             // version
             byte version = bb.readByte();
@@ -69,9 +71,9 @@ public class OXPTopologyReplyVer10 implements OXPTopologyReply {
             }
             // xid
             long xid = bb.readInt();
-            // internalLinks[]
-            List<OXPInternalLink> internalLinks = ChannelUtils.readList(bb,length - (bb.readerIndex() - startIndex), OXPInternalLinkVer10.READER);
-            return new OXPTopologyReplyVer10(xid, internalLinks);
+            // hosts[]
+            List<OXPHost> hosts = ChannelUtils.readList(bb, length - (bb.readerIndex() - startIndex), OXPHostVer10.READER);
+            return new OXPHostReplyVer10(xid, hosts);
         }
     }
 
@@ -81,40 +83,41 @@ public class OXPTopologyReplyVer10 implements OXPTopologyReply {
     }
 
     static final Writer WRITER = new Writer();
-    static class Writer implements OXPMessageWriter<OXPTopologyReplyVer10> {
+    static class Writer implements OXPMessageWriter<OXPHostReplyVer10> {
         @Override
-        public void write(ChannelBuffer bb, OXPTopologyReplyVer10 message) {
+        public void write(ChannelBuffer bb, OXPHostReplyVer10 message) {
             int startIndex = bb.writerIndex();
             // version
             bb.writeByte(OXPVersion.OXP_10.getWireVersion());
             // type
-            bb.writeByte(OXPType.OXPT_TOPO_REPLY.value());
+            bb.writeByte(OXPType.OXPT_HOST_REPLY.value());
             // tmp length
             int lengthIndex = bb.writerIndex();
             bb.writeShort(0);
             // xid
             bb.writeInt((int) message.xid);
-            // internalLinks[]
-            ChannelUtils.writeList(bb, message.internalLinks);
+            // host[]
+            ChannelUtils.writeList(bb, message.hosts);
             // update length
             int length = bb.writerIndex() - startIndex;
             bb.setShort(lengthIndex, length);
         }
     }
+
     @Override
     public Builder createBuilder() {
         return null;
     }
 
-    static class Builder implements OXPTopologyReply.Builder {
+    static class Builder implements OXPHostReply.Builder {
         private long xid;
-        private List<OXPInternalLink> internalLinks;
+        private List<OXPHost> hosts;
 
         @Override
-        public OXPTopologyReply build() {
-            if (internalLinks == null)
-                throw new NullPointerException("Property internalLinks must not be null");
-            return new OXPTopologyReplyVer10(xid, internalLinks);
+        public OXPHostReply build() {
+            if (hosts == null)
+                throw new NullPointerException("property hosts cannot be null");
+            return new OXPHostReplyVer10(xid, hosts);
         }
 
         @Override
@@ -124,7 +127,7 @@ public class OXPTopologyReplyVer10 implements OXPTopologyReply {
 
         @Override
         public OXPType getType() {
-            return OXPType.OXPT_TOPO_REPLY;
+            return OXPType.OXPT_HOST_REPLY;
         }
 
         @Override
@@ -133,19 +136,19 @@ public class OXPTopologyReplyVer10 implements OXPTopologyReply {
         }
 
         @Override
-        public OXPTopologyReply.Builder setXid(long xid) {
+        public OXPHostReply.Builder setXid(long xid) {
             this.xid = xid;
             return this;
         }
 
         @Override
-        public List<OXPInternalLink> getInternalLink() {
-            return internalLinks;
+        public List<OXPHost> getHosts() {
+            return hosts;
         }
 
         @Override
-        public OXPTopologyReply.Builder setInternalLink(List<OXPInternalLink> list) {
-            this.internalLinks = list;
+        public OXPHostReply.Builder setHosts(List<OXPHost> hosts) {
+            this.hosts = hosts;
             return this;
         }
     }
@@ -163,13 +166,13 @@ public class OXPTopologyReplyVer10 implements OXPTopologyReply {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        OXPTopologyReplyVer10 other = (OXPTopologyReplyVer10) obj;
+        OXPHostReplyVer10 other = (OXPHostReplyVer10) obj;
         if (this.xid != other.xid)
             return false;
-        if (this.internalLinks == null) {
-            if (other.internalLinks != null)
+        if (this.hosts == null) {
+            if (other.hosts != null)
                 return false;
-        } else if (!this.internalLinks.equals(other.internalLinks))
+        } else if (!this.hosts.equals(other.hosts))
             return false;
         return true;
     }

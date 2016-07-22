@@ -10,8 +10,10 @@ import org.slf4j.LoggerFactory;
 /**
  * Created by cr on 16-7-21.
  */
-public class OXPInternalLink implements Writeable, PrimitiveSinkable{
+public class OXPInternalLink implements Writeable, PrimitiveSinkable {
     private final static Logger logger = LoggerFactory.getLogger(OXPInternalLink.class);
+
+    public static final int SINGLE_LENGTH = 12;
 
     private final OXPVport srcVport;
     private final OXPVport dstVport;
@@ -54,5 +56,37 @@ public class OXPInternalLink implements Writeable, PrimitiveSinkable{
         srcVport.writeTo(bb);
         dstVport.writeTo(bb);
         bb.writeLong(capability);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        OXPInternalLink other = (OXPInternalLink) obj;
+        if (this.srcVport == null) {
+            if (other.srcVport != null)
+                return false;
+        } else if (!this.srcVport.equals(other.srcVport)) {
+            return false;
+        }
+        if (this.dstVport == null) {
+            if (other.dstVport != null)
+                return false;
+        } else if (!this.dstVport.equals(other.dstVport)) {
+            return false;
+        }
+        if (this.capability != other.capability)
+            return false;
+        if (this.version == null) {
+            if (other.version != null)
+                return false;
+        } else if (!this.version.equals(other.version)) {
+            return false;
+        }
+        return true;
     }
 }

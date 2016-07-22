@@ -12,6 +12,8 @@ import org.onosproject.oxp.types.OXPVport;
  */
 abstract class OXPInternalLinkVer10 {
     final static int LENGTH = 12;
+
+    static final Reader READER = new Reader();
     static class Reader implements OXPMessageReader<OXPInternalLink> {
         @Override
         public OXPInternalLink readFrom(ChannelBuffer bb) throws OXPParseError {

@@ -9,7 +9,7 @@ import org.onosproject.oxp.protocol.OXPVersion;
 /**
  * Created by cr on 16-7-18.
  */
-public class TestBaseVer10 {
+abstract class TestBaseVer10 {
     final static OXPFactory oxpMsgFactory = OXPFactories.getFactory(OXPVersion.OXP_10);
     final static OXPMessageReader<OXPMessage> oxpMsgReader = OXPFactories.getGenericReader();
 

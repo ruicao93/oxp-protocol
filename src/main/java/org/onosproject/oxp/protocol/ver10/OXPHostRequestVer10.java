@@ -4,19 +4,19 @@ import com.google.common.hash.PrimitiveSink;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.onosproject.oxp.exceptions.OXPParseError;
 import org.onosproject.oxp.protocol.OXPFeaturesRequest;
+import org.onosproject.oxp.protocol.OXPHostRequest;
 import org.onosproject.oxp.protocol.OXPMessageReader;
 import org.onosproject.oxp.protocol.OXPMessageWriter;
-import org.onosproject.oxp.protocol.OXPTopologyRequest;
 import org.onosproject.oxp.protocol.OXPType;
 import org.onosproject.oxp.protocol.OXPVersion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Created by cr on 16-7-21.
+ * Created by cr on 16-7-22.
  */
-public class OXPTopologyRequestVer10 implements OXPTopologyRequest {
-    private static final Logger logger = LoggerFactory.getLogger(OXPTopologyRequestVer10.class);
+public class OXPHostRequestVer10 implements OXPHostRequest {
+    private static final Logger logger = LoggerFactory.getLogger(OXPHostRequestVer10.class);
 
     // version: 1.0
     static final byte WIRE_VERSION = 1;
@@ -28,9 +28,9 @@ public class OXPTopologyRequestVer10 implements OXPTopologyRequest {
     private final long xid;
 
     // Immutable default instance
-    static final OXPTopologyRequestVer10 DEFAULT = new OXPTopologyRequestVer10(DEFAULT_XID);
+    static final OXPFeaturesRequestVer10 DEFAULT = new OXPFeaturesRequestVer10(DEFAULT_XID);
 
-    OXPTopologyRequestVer10(long xid) {
+    OXPHostRequestVer10(long xid) {
         this.xid = xid;
     }
 
@@ -41,7 +41,7 @@ public class OXPTopologyRequestVer10 implements OXPTopologyRequest {
 
     @Override
     public OXPType getType() {
-        return OXPType.OXPT_TOPO_REQUEST;
+        return OXPType.OXPT_HOST_REQUEST;
     }
 
     @Override
@@ -50,9 +50,9 @@ public class OXPTopologyRequestVer10 implements OXPTopologyRequest {
     }
 
     static final Reader READER = new Reader();
-    static class Reader implements OXPMessageReader<OXPTopologyRequest> {
+    static class Reader implements OXPMessageReader<OXPHostRequest> {
         @Override
-        public OXPTopologyRequest readFrom(ChannelBuffer bb) throws OXPParseError {
+        public OXPHostRequest readFrom(ChannelBuffer bb) throws OXPParseError {
             int startIndex = bb.readerIndex();
             // version
             byte version = bb.readByte();
@@ -62,7 +62,7 @@ public class OXPTopologyRequestVer10 implements OXPTopologyRequest {
             int length = bb.readShort();
             // xid
             long xid = bb.readInt();
-            return new OXPTopologyRequestVer10(xid);
+            return new OXPHostRequestVer10(xid);
         }
     }
 
@@ -72,13 +72,13 @@ public class OXPTopologyRequestVer10 implements OXPTopologyRequest {
     }
 
     static final Writer WRITER = new Writer();
-    static class Writer implements OXPMessageWriter<OXPTopologyRequestVer10> {
+    static class Writer implements OXPMessageWriter<OXPHostRequestVer10> {
         @Override
-        public void write(ChannelBuffer bb, OXPTopologyRequestVer10 message){
+        public void write(ChannelBuffer bb, OXPHostRequestVer10 message){
             //version
             bb.writeByte(WIRE_VERSION);
             //type
-            bb.writeByte(OXPType.OXPT_TOPO_REQUEST.value());
+            bb.writeByte(OXPType.OXPT_HOST_REQUEST.value());
             //length
             bb.writeShort(LENGTH);
             //xid
@@ -91,15 +91,15 @@ public class OXPTopologyRequestVer10 implements OXPTopologyRequest {
         return null;
     }
 
-    static class Builder implements OXPTopologyRequest.Builder {
+    static class Builder implements OXPHostRequest.Builder {
         // OXP msg fileds
         private boolean xidSet;
         private long xid;
 
         @Override
-        public OXPTopologyRequest build() {
+        public OXPHostRequest build() {
             long xid = this.xidSet ? this.xid : DEFAULT_XID;
-            return new OXPTopologyRequestVer10(xid);
+            return new OXPHostRequestVer10(xid);
         }
 
         @Override
@@ -109,7 +109,7 @@ public class OXPTopologyRequestVer10 implements OXPTopologyRequest {
 
         @Override
         public OXPType getType() {
-            return OXPType.OXPT_TOPO_REQUEST;
+            return OXPType.OXPT_HOST_REQUEST;
         }
 
         @Override
@@ -118,7 +118,7 @@ public class OXPTopologyRequestVer10 implements OXPTopologyRequest {
         }
 
         @Override
-        public OXPTopologyRequest.Builder setXid(long xid) {
+        public OXPHostRequest.Builder setXid(long xid) {
             this.xidSet = true;
             this.xid = xid;
             return this;
@@ -138,7 +138,7 @@ public class OXPTopologyRequestVer10 implements OXPTopologyRequest {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        OXPTopologyRequestVer10 other = (OXPTopologyRequestVer10) obj;
+        OXPHostRequestVer10 other = (OXPHostRequestVer10) obj;
 
         if( xid != other.xid)
             return false;
