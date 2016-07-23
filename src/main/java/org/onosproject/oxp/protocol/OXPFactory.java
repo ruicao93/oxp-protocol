@@ -28,6 +28,8 @@ public interface OXPFactory extends XidGenerator {
     OXPHostReply.Builder buildHostReply();
     OXPHostUpdate.Builder buildHostUpdate();
     OXPVportStatus.Builder buildVportStatus();
+    OXPSbp.Builder buildSbp();
+
 
 
     OXPMessageReader<OXPMessage> getReader();

@@ -12,6 +12,7 @@ import org.onosproject.oxp.protocol.OXPHostReply;
 import org.onosproject.oxp.protocol.OXPHostRequest;
 import org.onosproject.oxp.protocol.OXPHostUpdate;
 import org.onosproject.oxp.protocol.OXPMessageReader;
+import org.onosproject.oxp.protocol.OXPSbp;
 import org.onosproject.oxp.protocol.OXPSetConfig;
 import org.onosproject.oxp.protocol.OXPTopologyReply;
 import org.onosproject.oxp.protocol.OXPTopologyRequest;
@@ -94,6 +95,11 @@ public class OXPFactoryVer10 implements OXPFactory {
     @Override
     public OXPTopologyReply.Builder buildTopologyReply() {
         return new OXPTopologyReplyVer10.Builder().setXid(nextXid());
+    }
+
+    @Override
+    public OXPSbp.Builder buildSbp() {
+        return new OXPSbpVer10.Builder().setXid(nextXid());
     }
 
     @Override

@@ -83,6 +83,9 @@ public final class OXPMessageVer10 {
                 case (byte) 0xf:
                     // discriminator value OXPType=15 for class OXPVportStatusVer10
                     return OXPVportStatusVer10.READER.readFrom(bb);
+                case (byte) 0x10:
+                    // discriminator value OXPType=16 for class OXPVportStatusVer10
+                    return OXPSbpVer10.READER.readFrom(bb);
                 default:
                     throw new OXPParseError("Unknown value for discriminator type of class OXPMessageVer10: " + type);
             }
